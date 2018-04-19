@@ -1,0 +1,21 @@
+status=/tmp/pianobar.status
+
+function status {
+	echo -n $* " " >> $status
+	date >> $status
+}
+
+mpg123 /home/pi/bin/pb_startup_sound.mp3
+
+while `/bin/true` ; do
+	status "starting pianobar"
+	/usr/local/bin/pianobar
+	status "stopped pianobar"
+
+	# Wait to be told to start up
+	status "waiting for start"
+	while [ ! -f /tmp/start_pianobar ] ; do
+		sleep 10
+	done
+	status "triggered to start up"
+done

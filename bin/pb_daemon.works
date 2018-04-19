@@ -1,0 +1,14 @@
+status=/tmp/pianobar.status
+
+while `/bin/true` ; do
+	echo -n "starting pianobar " >> $status
+	date >> $status
+	/usr/local/bin/pianobar
+	echo -n "stopped pianobar " >> $status
+	date >> $status
+	while [ ! -f /tmp/start_pianobar ] ; do
+		sleep 10
+	done
+	echo -n "waking back up " >> $status
+	date >> $status
+done

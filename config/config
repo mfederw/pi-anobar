@@ -1,0 +1,6 @@
+user = ME
+password = MYPASSWORD
+fifo = /home/pi/.config/pianobar/ctl
+event_command = /home/pi/.config/pianobar/event
+tls_fingerprint = 2D0AFDAFA16F4B5C0A43F3CB1D4752F9535507C0
+

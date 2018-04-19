@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pianobar_fifo=/home/pi/.config/pianobar/ctl
+
+echo "-" > $pianobar_fifo

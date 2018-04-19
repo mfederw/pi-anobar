@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cat - > /tmp/$1
+
+#
+# This could just go in the php code so that the
+# page is generated at view time instead of every
+# songstart.
+#
+if [ "$1" = "songstart" ] || [ "$1" = "songlove" ] ; then
+    stations_file=/var/www/stations.php
+    playing_file=/var/www/playing.php
+
+    # Collect Stations
+    echo "<?php" > $stations_file
+    grep ^stationCount= /tmp/songstart | sed "+s/=/\ =\ /" | sed "+s/$/\;/" | sed "+s/^/\$/" >> $stations_file
+    grep ^station /tmp/songstart | grep -v stationName | grep -v stationCount | sed "+s/=/]\ =\ \"/"  | sed "+s/^station/\$station\[/" | sed "+s/$/\"\;/" >> $stations_file
+    echo "?>" >> $stations_file
+
+    # Currently playing info
+
+    echo "<?php" > $playing_file
+    egrep -e ^stationName= -e ^coverArt= -e ^title= -e ^album= -e ^artist= -e ^rating= /tmp/$1 | sed "+s/=/\ =\ \"/" | sed "+s/$/\"\;/" | sed "+s/^/\$/" >> $playing_file
+    echo "?>" >> $playing_file
+fi
+

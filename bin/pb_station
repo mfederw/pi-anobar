@@ -1,0 +1,6 @@
+#!/bin/bash
+
+station_number=$1
+pianobar_fifo=/home/pi/.config/pianobar/ctl
+
+echo -n "s" > $pianobar_fifo ; echo $station_number > $pianobar_fifo
